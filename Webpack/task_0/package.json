@@ -8,7 +8,7 @@
   "description": "Webpack project",
   "main": "src/index.js",
   "dependencies": {
-    "jquery": "^3.7.1",
+    "jquery": "^3.7.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
