@@ -15,16 +15,22 @@ module.exports = {
       },
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/, // 画像ファイルに適用
-        type: 'asset/resource', // ファイルを出力ディレクトリにコピーし、URLを返す
-        generator: {
-          filename: 'assets/images/[hash][ext][query]' // 画像の出力パスと名前のカスタマイズ
-        }
+        use: [
+          'file-loader', // ファイルを出力ディレクトリにコピー
+          {
+            loader: 'image-webpack-loader', // 画像の最適化
+            options: {
+              bypassOnDebug: true, // webpack@1.x
+              disable: false // webpack@2.x and newer
+            }
+          }
+        ]
       }
-    ],
+    ]
   },
   performance: {
     hints: 'warning', // 警告のみを出力する
     maxAssetSize: 500000, // 最大アセットサイズ（バイト単位）
-    maxEntrypointSize: 500000, // 最大エントリポイントサイズ（バイト単位）
-  },
+    maxEntrypointSize: 500000 // 最大エントリポイントサイズ（バイト単位）
+  }
 };
