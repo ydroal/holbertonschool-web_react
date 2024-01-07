@@ -41,9 +41,7 @@ module.exports = {
     maxEntrypointSize: 500000
   },
   devServer: {
-    static: {
-      directory: path.join(__dirname, 'public'),
-    },
+    contentBase: './public',
     port: 8564, 
     open: true
   },
