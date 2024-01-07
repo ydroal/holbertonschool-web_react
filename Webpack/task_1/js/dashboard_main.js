@@ -1,4 +1,5 @@
-import $ from 'jquery';
+const $ = require('jquery');
+const _ = require('lodash');
 
 $('body').append('<p>Holberton Dashboard</p>');
 $('body').append('<p>Dashboard data for the students</p>');
@@ -13,4 +14,8 @@ function updateCounter() {
   $('#count').text(count + ' clicks on the button');
 }
 
-$('button').on('click', updateCounter); 
+// Lodashのdebounce関数を使用してupdateCounter関数をラップする
+const debouncedUpdateCounter = _.debounce(updateCounter, 500);
+
+// ボタンのクリックイベントにdebouncedUpdateCounter関数をバインドする
+$('button').on('click', debouncedUpdateCounter);
