@@ -8,8 +8,6 @@
   text-align: center;
 }
 
-
-
 .App-header {
   display: flex;
   align-items: center;
@@ -22,6 +20,17 @@
 .holberton-logo {
   width: 200px;  
   height: auto;
+}
+
+input {
+  border: 1px solid #e8e8e8;
+  margin: 0.8rem;
+}
+
+.App button {
+  background-color: #ffffff;
+  border: 1px solid #e8e8e8;
+  border-radius: 3px;
 }
 
 .App-body {
