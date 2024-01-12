@@ -1,0 +1,38 @@
+* {
+  margin: 0;
+  border: 0;
+  box-sizing: border-box;
+}
+
+.App {
+  text-align: center;
+}
+
+
+
+.App-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  color: #df354b;
+  border-bottom: 3px solid #df354b;
+  
+}
+
+.holberton-logo {
+  width: 200px;  
+  height: auto;
+}
+
+.App-body {
+  min-height: 100vh;
+  margin: 2rem;
+  text-align: left;
+}
+
+.App-footer {
+  font-style: italic;
+  text-align:center;
+  padding-top: 1rem;
+  border-top: 3px solid #df354b;
+}
