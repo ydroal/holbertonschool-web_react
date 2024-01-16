@@ -1,0 +1,18 @@
+.Notifications {
+  padding: 2rem;
+  border: 1px dashed #df354b;;
+}
+[data-priority=default] {
+  color: blue;
+}
+[data-priority=urgent] {
+  color: red;
+}
+
+.Notifications ul {
+  margin-top: 0.5rem;
+}
+.Notifications button {
+  background-color: transparent;
+}
+
