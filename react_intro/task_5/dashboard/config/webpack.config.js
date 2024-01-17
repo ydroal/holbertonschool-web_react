@@ -20,7 +20,7 @@ module.exports = {
       // 画像ファイルのローダーの設定
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/,
-        use: ['file-loader']
+        use: ['file-loader', 'image-webpack-loader']
       },
     ],
   },
