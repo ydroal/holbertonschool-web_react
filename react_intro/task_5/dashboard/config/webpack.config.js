@@ -1,6 +1,7 @@
 const path = require('path');
 
 module.exports = {
+  mode: 'development',
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, '../dist'),
@@ -12,6 +13,17 @@ module.exports = {
   },
   module: {
     rules: [
+      // Babel Loaderの設定
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env', '@babel/preset-react']
+          }
+        }
+      },
       // スタイルローダーとCSSローダーの設定
       {
         test: /\.css$/,
@@ -20,7 +32,7 @@ module.exports = {
       // 画像ファイルのローダーの設定
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/,
-        use: ['file-loader', 'image-webpack-loader']
+        use: ['file-loader']
       },
     ],
   },
