@@ -1,0 +1,13 @@
+.App-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  color: #df354b;
+  
+  
+}
+
+.holberton-logo {
+  width: 200px;  
+  height: auto;
+}
