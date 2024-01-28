@@ -1,0 +1,41 @@
+.notificationHidden {
+  display: none;
+}
+
+.menuItem {
+  text-align: right;
+  margin-right: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.Notifications {
+  position: relative;
+  padding: 1rem;
+  border: 1px dashed #df354b;
+  margin-right: 2rem;
+}
+
+.Notifications button {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.Notifications button img {
+  width: 20px;
+  height: 20px;
+}
+
+[data-notification-type=default] {
+  color: blue;
+}
+[data-notification-type=urgent] {
+  color: red;
+}
+
+.Notifications ul {
+  margin-top: 0.5rem;
+}
+.Notifications button {
+  background-color: transparent;
+}

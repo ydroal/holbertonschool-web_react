@@ -1,0 +1,16 @@
+input {
+  border: 1px solid #e8e8e8;
+  margin: 0.8rem;
+}
+
+.App-body button {
+  background-color: #ffffff;
+  border: 1px solid #e8e8e8;
+  border-radius: 3px;
+}
+
+.App-body {
+  min-height: 30vh;
+  margin: 2rem;
+  text-align: left;
+}
