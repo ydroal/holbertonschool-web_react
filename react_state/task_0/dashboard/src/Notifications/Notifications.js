@@ -103,10 +103,10 @@ class Notifications extends Component {
     console.log(`Notification ${id} has been marked as read`);
   }
 
-  handleClick() {
+  handleClick = () => {
     console.log('Close button has been clicked');
     this.props.handleHideDrawer();
-  }
+  };
   
   shouldComponentUpdate(nextProps) {
     return nextProps.displayDrawer !== this.props.displayDrawer ||
