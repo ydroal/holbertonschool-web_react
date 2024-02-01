@@ -103,10 +103,10 @@ class Notifications extends Component {
     console.log(`Notification ${id} has been marked as read`);
   }
 
-  handleClick = () => {
-    console.log('Close button has been clicked');
-    this.props.handleHideDrawer();
-  };
+  // handleClick = () => {
+  //   console.log('Close button has been clicked');
+  //   this.props.handleHideDrawer();
+  // };
   
   shouldComponentUpdate(nextProps) {
     return nextProps.displayDrawer !== this.props.displayDrawer ||
@@ -115,7 +115,7 @@ class Notifications extends Component {
 
   render() {
     // displayDrawerがtrueの場合、通知ドロワーが開いているとみなされます。
-    const { displayDrawer, listNotifications, handleDisplayDrawer } = this.props;
+    const { displayDrawer, listNotifications, handleDisplayDrawer, handleHideDrawer } = this.props;
     // 通知パネルが非表示か通知が一つもない場合はshowMenuItemを表示
     const showMenuItem = !displayDrawer || listNotifications.length === 0;
     const notificationStyle = displayDrawer ? styles.notificationVisible : styles.notificationHidden;
@@ -148,8 +148,8 @@ class Notifications extends Component {
                     />
                   ))
               )}
-            </ul>
-            <button aria-label="Close" onClick={this.handleClick.bind(this)} className={css(styles.button)}>
+            </ul>onClick={handleHideDrawer}
+            <button aria-label="Close" onClick={handleHideDrawer} className={css(styles.button)}>
               <img src={closeIcon} alt="Close" className={css(styles.buttonImg)}/>
             </button>
             </div>
