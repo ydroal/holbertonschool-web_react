@@ -17,4 +17,14 @@ const hideNotificationDrawer = () => {
   return { type: HIDE_NOTIFICATION_DRAWER };
 };
 
-export { login, logout, displayNotificationDrawer, hideNotificationDrawer };
+const dispatch = store.dispatch;
+
+// アクションクリエーターをバインド
+const boundUiActionCreators = bindActionCreators({
+  login,
+  logout,
+  displayNotificationDrawer,
+  hideNotificationDrawer
+}, dispatch);
+
+export default boundUiActionCreators;

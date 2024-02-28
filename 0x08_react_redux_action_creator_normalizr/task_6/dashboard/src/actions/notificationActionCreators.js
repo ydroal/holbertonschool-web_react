@@ -9,6 +9,8 @@ const setNotificationFilter = (filter) => {
   return { type: SET_TYPE_FILTER, filter };
 };
 
+const dispatch = store.dispatch;
+
 // アクションクリエーターをバインド
 const boundNotificationActionCreators = bindActionCreators({
   markAsread,
