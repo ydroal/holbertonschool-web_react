@@ -1,7 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { StyleSheetTestUtils, css } from 'aphrodite';
-import App from './App';
+import { fromJS } from 'immutable';
+import { App, mapStateToProps } from './App';
 import Notifications from '../Notifications/Notifications';
 import Header from '../Header/Header';
 import Login from '../Login/Login';
@@ -132,4 +133,16 @@ describe('App', () => {
     expect(wrapper.state('listNotifications')).toEqual(expectedNotifications);
   });
 });
+
+describe('mapStateToProps', () => {
+  it('should return { isLoggedIn: true } for isUserLoggedIn: true in state', () => {
+    let state = fromJS({
+      uiReducer: {
+          isLoggedIn: true
+      }
+    });
+    expect(mapStateToProps(state)).toEqual({ isLoggedIn: true });
+  });
+});
+
 

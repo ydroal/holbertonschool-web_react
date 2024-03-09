@@ -71,8 +71,9 @@ const listNotifications = [
 ];
 
 // uiReducerからisLoggedIn プロパティを取得
-const mapStateToProps = (state) => ({
-  isLoggedIn: state.uiReducer.isLoggedIn,
+export const mapStateToProps = (state) => ({
+  isLoggedIn: state.get('uiReducer').get('isLoggedIn')
+  // isLoggedIn: state.uiReducer.isLoggedIn
 });
 
 // 通常のエクスポートでコンポーネントをエクスポート（テスト用など）
@@ -186,5 +187,6 @@ export class App extends Component {
 }
 
 // connect 関数を使用して AppコンポーネントをReduxストアに接続
+const ConnectedApp = connect(mapStateToProps)(App);
 // デフォルトエクスポートで接続されたコンポーネントをエクスポート
-export default const ConnectedApp = connect(mapStateToProps)(App);
+export default ConnectedApp;
