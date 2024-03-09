@@ -10,6 +10,7 @@ import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBot
 import BodySection from '../BodySection/BodySection';
 import { getLatestNotification } from '../utils/utils';
 import AppContext from './AppContext';
+import { displayNotificationDrawer, hideNotificationDrawer } from './actions/uiActionCreators';
 
 // Appコンポーネントのスタイルを定義
 const styles = StyleSheet.create({
@@ -77,6 +78,13 @@ export const mapStateToProps = (state) => ({
   displayDrawer: state.get('uiReducer').get('isNotificationDrawerVisible'),
 });
 
+// コンポーネントのpropsにアクションクリーエーターをマッピング
+// このオブジェクトの各キーはコンポーネントのprops名になり、値はアクションクリエーターの関数になる
+const mapDispatchToProps = {
+  displayNotificationDrawer,
+  hideNotificationDrawer,
+  };
+
 // 通常のエクスポートでコンポーネントをエクスポート（テスト用など）
 export class App extends Component {
   constructor(props) {
@@ -93,13 +101,13 @@ export class App extends Component {
     };
   }
 
-  handleDisplayDrawer = () => {
-    this.setState({ displayDrawer: true });
-  }
+  // handleDisplayDrawer = () => {
+  //   this.setState({ displayDrawer: true });
+  // }
 
-  handleHideDrawer = () => {
-    this.setState({ displayDrawer: false });
-  }
+  // handleHideDrawer = () => {
+  //   this.setState({ displayDrawer: false });
+  // }
 
   componentDidMount() {
     window.addEventListener('keydown', this.handleKeyDown);
@@ -151,7 +159,8 @@ export class App extends Component {
   }
 
   render() {
-    const { user, displayDrawer } = this.state;
+    const { user } = this.state;
+    const { displayDrawer, displayNotificationDrawer, hideNotificationDrawer } = this.props;
     return (
       <AppContext.Provider value={{ user, logOut: this.logOut }}>
       <>
@@ -159,8 +168,8 @@ export class App extends Component {
           <Header />
           <Notifications 
           displayDrawer={displayDrawer}
-          handleDisplayDrawer={this.handleDisplayDrawer}
-          handleHideDrawer={this.handleHideDrawer}
+          handleDisplayDrawer={displayNotificationDrawer}
+          handleHideDrawer={hideNotificationDrawer}
           listNotifications={this.state.listNotifications} 
           markNotificationAsRead={this.markNotificationAsRead}/>
         </div>
@@ -188,6 +197,6 @@ export class App extends Component {
 }
 
 // connect 関数を使用して AppコンポーネントをReduxストアに接続
-const ConnectedApp = connect(mapStateToProps)(App);
+const ConnectedApp = connect(mapStateToProps, mapDispatchToProps)(App);
 // デフォルトエクスポートで接続されたコンポーネントをエクスポート
 export default ConnectedApp;
