@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { StyleSheet, css } from 'aphrodite';
 import Header from '../Header/Header'
 import Footer from '../Footer/Footer'
@@ -89,9 +90,7 @@ const mapDispatchToProps = {
 export class App extends Component {
   constructor(props) {
     super(props);
-    // displayDrawer ステートの初期値を設定
     this.state = {
-      displayDrawer: false,
       user: {
         email: '',
         password: '',
@@ -100,14 +99,6 @@ export class App extends Component {
       listNotifications: listNotifications
     };
   }
-
-  // handleDisplayDrawer = () => {
-  //   this.setState({ displayDrawer: true });
-  // }
-
-  // handleHideDrawer = () => {
-  //   this.setState({ displayDrawer: false });
-  // }
 
   componentDidMount() {
     window.addEventListener('keydown', this.handleKeyDown);
@@ -195,6 +186,18 @@ export class App extends Component {
     );
   }
 }
+
+App.propTypes = {
+  isLoggedIn: PropTypes.bool, 
+  displayDrawer: PropTypes.bool,
+  displayNotificationDrawer: PropTypes.func.isRequired,
+  hideNotificationDrawer: PropTypes.func.isRequired,
+};
+
+App.defaultProps = {
+  isLoggedIn: false,
+  displayDrawer: false,
+};
 
 // connect 関数を使用して AppコンポーネントをReduxストアに接続
 const ConnectedApp = connect(mapStateToProps, mapDispatchToProps)(App);
