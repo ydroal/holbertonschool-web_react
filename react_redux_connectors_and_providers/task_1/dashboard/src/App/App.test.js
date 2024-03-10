@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { StyleSheetTestUtils, css } from 'aphrodite';
 import { fromJS } from 'immutable';
-import { App, mapStateToProps } from './App';
+import ConnectedApp, { App, mapStateToProps } from './App';
 import Notifications from '../Notifications/Notifications';
 import Header from '../Header/Header';
 import Login from '../Login/Login';
@@ -17,12 +17,25 @@ afterAll(() => {
   StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
 });
 
+const initialState = fromJS({
+  isUserLoggedIn: false,
+  isNotificationDrawerVisible: false,
+});
+
 describe('App', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = shallow(<App />);
+    // Reduxの状態構造をシミュレーション
+    const mockProps = mapStateToProps(initialState);
+    const mockFunctions = {
+      displayNotificationDrawer: jest.fn(),
+      hideNotificationDrawer: jest.fn(),
+    };
+
+    wrapper = shallow(<App {...mockProps} {...mockFunctions} />);
   });
+
 
   it('contain the Notifications component', () => {
     expect(wrapper.find(Notifications).exists()).toBe(true);
@@ -41,13 +54,18 @@ describe('App', () => {
   });
 
   it('logOut', () => {
-    const logOut = jest.fn(() => undefined);
-    const wrapper = shallow(<App logOut={logOut} />);
-    expect(wrapper.exists());
-    const alert = jest.spyOn(global, 'alert');
-    expect(alert);
-    expect(logOut);
-    jest.restoreAllMocks();
+    // mapStateToPropsを使ってテスト用のpropsを生成
+    const mockProps = mapStateToProps(/* 必要に応じて適切な状態をここに渡す */);
+    // テスト固有のpropsを設定
+    const testSpecificProps = {
+      logOut: jest.fn(),
+      displayNotificationDrawer: jest.fn(),
+      hideNotificationDrawer: jest.fn(),
+    };
+    // 必要なpropsをAppコンポーネントに渡す
+    const wrapper = shallow(<App {...mockProps} {...testSpecificProps} />);
+    expect(wrapper.exists()).toBe(true);
+    // 他のアサーションを追加...
   });
 
   // 追加
@@ -79,41 +97,6 @@ describe('App', () => {
     });
   });
 
-  // 追加
-  it('displayDrawer state is false by default', () => {
-    expect(wrapper.state('displayDrawer')).toEqual(false);
-  });
-
-  // 追加
-  it('handleDisplayDrawer sets displayDrawer to true', () => {
-    wrapper.instance().handleDisplayDrawer();
-    expect(wrapper.state('displayDrawer')).toEqual(true);
-  });
-
-  // 追加
-  it('handleHideDrawer sets displayDrawer to false', () => {
-    wrapper.instance().handleDisplayDrawer(); // Set to true first
-    wrapper.instance().handleHideDrawer();
-    expect(wrapper.state('displayDrawer')).toEqual(false);
-  });
-
-  it('displayDrawer toggle handleDisplayDrawer', () => {
-    // const wrapper = shallow(<App />);
-    expect(wrapper.state().displayDrawer).toEqual(false);
-    const instance = wrapper.instance();
-    instance.handleDisplayDrawer();
-    expect(wrapper.state().displayDrawer).toEqual(true);
-  });
-
-  it('displayDrawer toggle handleDisplayDrawer and handleHideDrawer', () => {
-    // const wrapper = shallow(<App />);
-    expect(wrapper.state().displayDrawer).toEqual(false);
-    wrapper.instance().handleDisplayDrawer();
-    expect(wrapper.state().displayDrawer).toEqual(true);
-    wrapper.instance().handleHideDrawer();
-    expect(wrapper.state().displayDrawer).toEqual(false);
-  });
-
   it('markNotificationAsRead removes the notification from the list', () => {
     const testNotifications = [
       { id: 1, value: "New course available" },
@@ -132,17 +115,43 @@ describe('App', () => {
   
     expect(wrapper.state('listNotifications')).toEqual(expectedNotifications);
   });
+
+  it('does not display CourseList when isLoggedIn is false', () => {
+    expect(wrapper.find(CourseList).exists()).toBe(false);
+  });
+
+  it('contains the Notifications component', () => {
+    expect(wrapper.find(Notifications).exists()).toBe(true);
+  });
+
+  // displayDrawer のテスト
+  it('displayDrawer prop matches the Redux state', () => {
+    expect(wrapper.prop('displayDrawer')).toEqual(initialState.get('isNotificationDrawerVisible'));
+  });
+
+  // isLoggedIn のテスト
+  it('isLoggedIn prop matches the Redux state', () => {
+    expect(wrapper.prop('isLoggedIn')).toEqual(initialState.get('isUserLoggedIn'));
+  });
 });
 
 describe('mapStateToProps', () => {
   it('should return { isLoggedIn: true } for isUserLoggedIn: true in state', () => {
     let state = fromJS({
-      uiReducer: {
-          isLoggedIn: true
-      }
+      isUserLoggedIn: true
     });
     expect(mapStateToProps(state)).toEqual({ isLoggedIn: true });
   });
+
+  it('should map state to props correctly', () => {
+    const mockState = fromJS({
+      isUserLoggedIn: true,
+      isNotificationDrawerVisible: true,
+    });
+    const expectedProps = {
+      isLoggedIn: true,
+      displayDrawer: true,
+    };
+    expect(mapStateToProps(mockState)).toEqual(expectedProps);
+  });
 });
-
-

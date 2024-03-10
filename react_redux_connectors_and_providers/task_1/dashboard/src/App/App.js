@@ -11,7 +11,7 @@ import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBot
 import BodySection from '../BodySection/BodySection';
 import { getLatestNotification } from '../utils/utils';
 import AppContext from './AppContext';
-import { displayNotificationDrawer, hideNotificationDrawer } from './actions/uiActionCreators';
+import { displayNotificationDrawer, hideNotificationDrawer } from '../actions/uiActionCreators';
 
 // Appコンポーネントのスタイルを定義
 const styles = StyleSheet.create({
@@ -74,9 +74,8 @@ const listNotifications = [
 
 // uiReducerからisLoggedIn プロパティを取得
 export const mapStateToProps = (state) => ({
-  // isLoggedIn: state.uiReducer.isLoggedIn
-  isLoggedIn: state.get('uiReducer').get('isUserLoggedIn'),
-  displayDrawer: state.get('uiReducer').get('isNotificationDrawerVisible'),
+  isLoggedIn: state.get('isUserLoggedIn'),
+  displayDrawer: state.get('isNotificationDrawerVisible'),
 });
 
 // コンポーネントのpropsにアクションクリーエーターをマッピング
